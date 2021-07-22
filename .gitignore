@@ -3,4 +3,3 @@ node_modules
 media
 env
 venv
-db.sqlite3
