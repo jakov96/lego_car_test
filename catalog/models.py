@@ -28,8 +28,8 @@ class Site(models.Model):
 class WidgetConfigurationItem(models.Model):
     key = models.CharField(max_length=200, verbose_name='Ключ')
     value = models.CharField(max_length=200, verbose_name='Значение')
-    site = models.ForeignKey(Site, null=True, blank=True, on_delete=models.SET_NULL)
     widget = models.ForeignKey(Widget, verbose_name='Виджет', on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = 'Параметр виджета'
