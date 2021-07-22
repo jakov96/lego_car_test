@@ -4,7 +4,6 @@ from django.db import models
 class Widget(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название')
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
-    configurations = models.JSONField(verbose_name='Конфигурация', default=dict)
 
     class Meta:
         verbose_name = 'Виджет'
@@ -24,6 +23,20 @@ class Site(models.Model):
 
     def __str__(self):
         return '{0}:{1}'.format(self.id, self.domain)
+
+
+class WidgetConfigurationItem(models.Model):
+    key = models.CharField(max_length=200, verbose_name='Ключ')
+    value = models.CharField(max_length=200, verbose_name='Значение')
+    site = models.ForeignKey(Site, null=True, blank=True, on_delete=models.SET_NULL)
+    widget = models.ForeignKey(Widget, verbose_name='Виджет', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Параметр виджета'
+        verbose_name_plural = 'Параметры виджета'
+
+    def __str__(self):
+        return '{} - {}:{}'.format(self.widget.title, self.key, self.value)
 
 
 class Brand(models.Model):
